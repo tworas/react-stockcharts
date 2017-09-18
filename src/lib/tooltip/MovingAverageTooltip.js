@@ -3,6 +3,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { format } from "d3-format";
+import displayValuesFor from "./displayValuesFor";
 import GenericChartComponent from "../GenericChartComponent";
 
 import ToolTipText from "./ToolTipText";
@@ -58,13 +59,16 @@ class MovingAverageTooltip extends Component {
 		this.renderSVG = this.renderSVG.bind(this);
 	}
 	renderSVG(moreProps) {
+		const { displayValuesFor } = this.props;
+
 		const { chartId } = moreProps;
-		const { chartConfig, currentItem } = moreProps;
+		const { chartConfig } = moreProps;
 
 		const { className, onClick, width, fontFamily, fontSize, textFill, labelFill } = this.props;
 		const { origin: originProp, displayFormat, options } = this.props;
 		const { chartConfig: { height } } = moreProps;
 
+		const currentItem = displayValuesFor(this.props, moreProps);
 		const config = chartConfig;
 
 		const origin = functor(originProp);
@@ -110,6 +114,7 @@ MovingAverageTooltip.propTypes = {
 	className: PropTypes.string,
 	displayFormat: PropTypes.func.isRequired,
 	origin: PropTypes.array.isRequired,
+	displayValuesFor: PropTypes.func,
 	onClick: PropTypes.func,
 	textFill: PropTypes.string,
 	labelFill: PropTypes.string,
@@ -128,6 +133,7 @@ MovingAverageTooltip.propTypes = {
 MovingAverageTooltip.defaultProps = {
 	className: "react-stockcharts-tooltip react-stockcharts-moving-average-tooltip",
 	displayFormat: format(".2f"),
+	displayValuesFor: displayValuesFor,
 	origin: [0, 10],
 	width: 65,
 };

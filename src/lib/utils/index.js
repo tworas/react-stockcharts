@@ -6,6 +6,7 @@ import { bisector } from "d3-array";
 import noop from "./noop";
 import identity from "./identity";
 
+export { default as rebind } from "./rebind";
 export { default as zipper } from "./zipper";
 export { default as merge } from "./merge";
 export { default as slidingWindow } from "./slidingWindow";
@@ -282,7 +283,7 @@ export function mapValue(object, iteratee) {
 }
 
 // copied from https://github.com/lodash/lodash/blob/master/mapObject.js
-export function mapObject(object, iteratee = identity) {
+export function mapObject(object = {}, iteratee = identity) {
 	const props = Object.keys(object);
 
 	// eslint-disable-next-line prefer-const

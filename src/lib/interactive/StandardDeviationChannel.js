@@ -10,7 +10,6 @@ import {
 	terminate,
 	saveNodeType,
 	isHoverForInteractiveType,
-	getElementsFactory,
 } from "./utils";
 
 import EachLinearRegressionChannel from "./hoc/EachLinearRegressionChannel";
@@ -31,8 +30,6 @@ class StandardDeviationChannel extends Component {
 		this.saveNodeType = saveNodeType.bind(this);
 
 		this.getSelectionState = isHoverForInteractiveType("channels")
-			.bind(this);
-		this.getElements = getElementsFactory("channels")
 			.bind(this);
 
 		this.nodes = [];

@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { format } from "d3-format";
 import { timeFormat } from "d3-time-format";
-
+import displayValuesFor from "./displayValuesFor";
 import GenericChartComponent from "../GenericChartComponent";
 
 import { isDefined, functor } from "../utils";
@@ -18,18 +18,21 @@ class OHLCTooltip extends Component {
 	}
 	renderSVG(moreProps) {
 		const { className, textFill, labelFill } = this.props;
-		const { chartConfig: { width, height }, displayXAccessor } = moreProps;
-		const { currentItem } = moreProps;
+		const { onClick, fontFamily, fontSize } = this.props;
+		const { displayValuesFor } = this.props;
+		const { xDisplayFormat, accessor, volumeFormat, ohlcFormat } = this.props;
 
-		const { onClick, xDisplayFormat, fontFamily, fontSize, accessor, volumeFormat, ohlcFormat } = this.props;
+		const { chartConfig: { width, height } } = moreProps;
+		const { displayXAccessor } = moreProps;
+
+		const currentItem = displayValuesFor(this.props, moreProps);
 
 		let displayDate, open, high, low, close, volume;
-
 		displayDate = open = high = low = close = volume = "n/a";
 
 		if (isDefined(currentItem)
-				&& isDefined(accessor(currentItem))
-				&& isDefined(accessor(currentItem).close)) {
+				&& isDefined(accessor(currentItem))) {
+
 			const item = accessor(currentItem);
 			volume = isDefined(item.volume)
 				? volumeFormat(item.volume)
@@ -41,7 +44,6 @@ class OHLCTooltip extends Component {
 			low = ohlcFormat(item.low);
 			close = ohlcFormat(item.close);
 		}
-
 		const { origin: originProp } = this.props;
 		const origin = functor(originProp);
 		const [x, y] = origin(width, height);
@@ -83,6 +85,7 @@ OHLCTooltip.propTypes = {
 	fontFamily: PropTypes.string,
 	fontSize: PropTypes.number,
 	onClick: PropTypes.func,
+	displayValuesFor: PropTypes.func,
 	volumeFormat: PropTypes.func,
 	textFill: PropTypes.string,
 	labelFill: PropTypes.string,
@@ -93,6 +96,7 @@ OHLCTooltip.defaultProps = {
 	xDisplayFormat: timeFormat("%Y-%m-%d"),
 	volumeFormat: format(".4s"),
 	ohlcFormat: format(".2f"),
+	displayValuesFor: displayValuesFor,
 	origin: [0, 0],
 };
 

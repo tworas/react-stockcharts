@@ -8,7 +8,6 @@ import {
 	terminate,
 	saveNodeType,
 	isHoverForInteractiveType,
-	getElementsFactory,
 } from "./utils";
 import EachGannFan from "./hoc/EachGannFan";
 import MouseLocationIndicator from "./components/MouseLocationIndicator";
@@ -28,8 +27,6 @@ class GannFan extends Component {
 		this.saveNodeType = saveNodeType.bind(this);
 
 		this.getSelectionState = isHoverForInteractiveType("fans")
-			.bind(this);
-		this.getElements = getElementsFactory("fans")
 			.bind(this);
 
 		this.nodes = [];

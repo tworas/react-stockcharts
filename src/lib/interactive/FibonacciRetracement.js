@@ -8,7 +8,6 @@ import {
 	terminate,
 	saveNodeType,
 	isHoverForInteractiveType,
-	getElementsFactory,
 } from "./utils";
 import EachFibRetracement from "./hoc/EachFibRetracement";
 import MouseLocationIndicator from "./components/MouseLocationIndicator";
@@ -30,8 +29,6 @@ class FibonacciRetracement extends Component {
 
 		this.terminate = terminate.bind(this);
 		this.getSelectionState = isHoverForInteractiveType("retracements")
-			.bind(this);
-		this.getElements = getElementsFactory("retracements")
 			.bind(this);
 
 		this.saveNodeType = saveNodeType.bind(this);
